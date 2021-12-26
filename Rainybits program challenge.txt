@@ -1,0 +1,102 @@
+****** PYTHON PROGRAM ******
+
+****** Method 1 ******
+
+pip install python-docx
+pip install docx
+pip install pyresparser
+
+import nltk
+nltk.download('stopwords')
+import os
+import re
+from docx import Document
+
+from pyresparser import ResumeParser
+import warnings
+warnings.filterwarnings('ignore')
+import en_core_web_sm
+nlp = en_core_web_sm.load()
+list =[]
+directory = "/content/resume sample 3-converted.pdf"
+data = ResumeParser(directory).get_extracted_data()
+data
+{'college_name': None,
+ 'company_names': None,
+ 'degree': ['Bachelor of Computer Application',
+  'Master of Computer Application'],
+ 'designation': None,
+ 'email': 'Email:radhakrishnan1234@gmail.com',
+ 'experience': None,
+ 'mobile_number': '8295262725',
+ 'name': 'RADHA KRISHNAN',
+ 'no_of_pages': 2,
+ 'skills': ['Training',
+  'Mobile',
+  'Reporting',
+  'Communication',
+  'Testing',
+  'English',
+  'Automation',
+  'Test cases',
+  'Writing',
+  'Sql'],
+ 'total_experience': 0}
+
+list = data['name']
+list
+RADHA KRISHNAN
+
+list =data['email']
+list
+Email:radhakrishnan1234@gmail.com
+
+list =data['mobile_number']
+list
+8295262725
+
+
+****** Method 2 ******
+
+filed=input()
+/content/resume sample 3-converted.pdf
+
+try:
+  doc = Document()
+  with open(filed,'r') as file:
+   doc.add_paragraph(file.read())
+  doc.save("text.docx")
+  data = ResumeParser('text.docx').get_extracted_data()
+  print("Name :", data['name'] ) 
+  print(data['email'])
+  
+  
+except:
+   data = ResumeParser(filed).get_extracted_data()
+   print("Name :" ,data['name'])
+   print(data['email'])
+
+Name : RADHA KRISHNAN
+Email:radhakrishnan1234@gmail.com
+
+
+****** Webapp ******
+
+import pywebio
+from pywebio.input import input,file
+from pywebio.output import put_markdown,put_table
+
+def data()
+    Resume = input("Input your resume",type="file")
+    
+    put_markdown('# **DATA**')
+    put_table('Name: %s . Email :%s. Mobile_number :%s' % (name,email,mobile))
+    put_html('<br><br>')
+    put_markdown('Name: %s . Email :%s. Mobile_number :%s' % (name,email,mobile))
+    put_html('<hr>')
+    put_table([['Name','Email','Mobile_number'],[name,email,mobile]])
+
+    break
+
+if __name__ =='__main__':
+    pywebio.start_server(data,port =555)

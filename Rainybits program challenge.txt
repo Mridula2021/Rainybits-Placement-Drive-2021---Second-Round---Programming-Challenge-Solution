@@ -1,83 +1,63 @@
 ****** PYTHON PROGRAM ******
 
-****** Method 1 ******
+from org.apache.poi.hwpf import HWPFDocument
+from org.apache.poi.hwpf.extractor import WordExtractor
+    class ReadDocFile(object):
 
-pip install python-docx
-pip install docx
-pip install pyresparser
+        def __init__(self, outerInstance):
+            self.__outerInstance = outerInstance
 
-import nltk
-nltk.download('stopwords')
-import os
-import re
-from docx import Document
+        @staticmethod
+        def main(args):
+            br = BufferedReader(InputStreamReader(System.in))
+            InputStreamReader(System.in))
+            file = None
+            extractor = None
+            try:
+                print("Enter the File directory")
+                dir =br.readLine().replace("\\","\\\\")
+                file = File(dir)
+                fis = FileInputStream(file.getAbsolutePath())
+                document = org.apache.poi.hwpf.HWPFDocument(fis)
+                extractor = org.apache.poi.hwpf.extractor.WordExtractor(document)
+                fileData = extractor.getParagraphText()
+                Name ="Not Found"
+                Email ="Not Found"
+                Address ="Not Found"
+                Mob ="Not Found"
+                i = 0
+                while i <len(fileData):
+                    ind =0
+                    temp =fileData[i].casefold()
+                    if Name is "Not Found" and "name" in temp:
+                        ind=temp.find("name")
+                        temp=temp[ind+4:].replace(":"," ")
+                        temp=temp.replace(" "," ")
+                        Name=temp
+                        if Address is "Not Found" and "address" in temp:
+                            ind=temp.find("address")
+                            temp=temp[ind+8:].replace(":"," ")
+                            temp=temp.replace(" "," ")
+                            Address=temp 
+                          
+                            if Email is "Not Found" and "email" in temp:
+                                ind=temp.find("mailto")
+                                temp=temp[ind+6:]
+                                temp=temp[0:temp.find("\"")]
+                                temp=temp.replace(" "," ")
+                                Email=temp 
+                               
+                                if Mob is "Not Found" and ("mob" in temp or "phone" in temp or "contact no" in temp):
+                                    ind=temp.find("phone")
+                                    temp=temp[temp.find(":"):]
+                                    temp=temp.replace(" "," ")
+                                    Mob=temp #System.out.println(temp);}}
+                                    print("Name:"+Name+"\nEmail:"+Email+"\nMobile:"+Mob+"\nAddress:"+Address)
+                                except Exception as exep:
+                                    exep.printStackTrace()
 
-from pyresparser import ResumeParser
-import warnings
-warnings.filterwarnings('ignore')
-import en_core_web_sm
-nlp = en_core_web_sm.load()
-list =[]
-directory = "/content/resume sample 3-converted.pdf"
-data = ResumeParser(directory).get_extracted_data()
-data
-{'college_name': None,
- 'company_names': None,
- 'degree': ['Bachelor of Computer Application',
-  'Master of Computer Application'],
- 'designation': None,
- 'email': 'Email:radhakrishnan1234@gmail.com',
- 'experience': None,
- 'mobile_number': '8295262725',
- 'name': 'RADHA KRISHNAN',
- 'no_of_pages': 2,
- 'skills': ['Training',
-  'Mobile',
-  'Reporting',
-  'Communication',
-  'Testing',
-  'English',
-  'Automation',
-  'Test cases',
-  'Writing',
-  'Sql'],
- 'total_experience': 0}
-
-list = data['name']
-list
-RADHA KRISHNAN
-
-list =data['email']
-list
-Email:radhakrishnan1234@gmail.com
-
-list =data['mobile_number']
-list
-8295262725
 
 
-****** Method 2 ******
-
-filed=input()
-/content/resume sample 3-converted.pdf
-
-try:
-  doc = Document()
-  with open(filed,'r') as file:
-   doc.add_paragraph(file.read())
-  doc.save("text.docx")
-  data = ResumeParser('text.docx').get_extracted_data()
-  print("Name :", data['name'] ) 
-  print(data['email'])
-  
-  
-except:
-   data = ResumeParser(filed).get_extracted_data()
-   print("Name :" ,data['name'])
-   print(data['email'])
-
-Name : RADHA KRISHNAN
-Email:radhakrishnan1234@gmail.com
 
 
 ****** Webapp ******
